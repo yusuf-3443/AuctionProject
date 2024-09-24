@@ -119,3 +119,7 @@ C:\Users\user\Desktop\new project\WebApi\bin\Debug\net8.0\ru\Microsoft.CodeAnaly
 C:\Users\user\Desktop\new project\WebApi\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
 C:\Users\user\Desktop\new project\WebApi\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
 C:\Users\user\Desktop\new project\WebApi\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\user\Desktop\new project\WebApi\bin\Debug\net8.0\WebApi.staticwebassets.runtime.json
+C:\Users\user\Desktop\new project\WebApi\bin\Debug\net8.0\AngleSharp.dll
+C:\Users\user\Desktop\new project\WebApi\obj\Debug\net8.0\WebApi.sourcelink.json
+C:\Users\user\Desktop\new project\WebApi\bin\Debug\net8.0\HtmlAgilityPack.dll

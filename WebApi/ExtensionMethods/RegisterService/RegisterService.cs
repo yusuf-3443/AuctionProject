@@ -4,6 +4,7 @@ using Infrastructure.Services.AuthService;
 
 using Microsoft.EntityFrameworkCore;
 using Infrastructure.Services.UserService;
+using Infrastructure.Services.EmailService;
 
 namespace WebApp.ExtensionMethods.RegisterService;
 
@@ -17,5 +18,7 @@ public static class RegisterService
         services.AddScoped<Seeder>();
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<IUserService,UserService>();
+        services.AddScoped<CarParserService>();
+    services.AddScoped<IEmailSender, EmailSender>();
     }
 }

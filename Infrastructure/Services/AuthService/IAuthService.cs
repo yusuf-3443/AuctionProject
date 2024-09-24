@@ -6,5 +6,6 @@ namespace Infrastructure.Services.AuthService;
 public interface IAuthService
 {
     public Task<Response<string>> Login(LoginDto loginDto);
+    public Task<Response<string>> VerifyCode(string codecha);
 
 }

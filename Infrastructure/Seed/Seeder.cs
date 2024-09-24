@@ -25,7 +25,7 @@ namespace Infrastructure.Seed
 
             var user = new User
             {
-                Email = "polvonov.a@gmail.com",
+                Email = "rahmonyusuf5555@gmail.com",
                 UserName = "SuperAdmin",
                 HashPassword = BCrypt.Net.BCrypt.HashPassword("1234"),
                 PhoneNumber = "+992007992757",

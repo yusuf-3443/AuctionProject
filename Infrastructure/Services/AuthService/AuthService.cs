@@ -4,29 +4,67 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using Domain.DTOs.AuthDTOs;
+using Domain.DTOs.EmailDTOs;
 using Domain.Models;
 using Domain.Responses;
 using Infrastructure.Services.Data;
+using Infrastructure.Services.EmailService;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Infrastructure.Services.AuthService;
 
- public class AuthService(DataContext context, IConfiguration configuration) : IAuthService
+ public class AuthService(DataContext context, IConfiguration configuration,IEmailSender emailSender) : IAuthService
 {
     #region Login
 
     public async Task<Response<string>> Login(LoginDto loginDto)
     {
         var user = await context.Users.FirstOrDefaultAsync(x =>
-            x.UserName == loginDto.UserName);
+            x.Email == loginDto.Email);
 if (user == null || !BCrypt.Net.BCrypt.Verify(loginDto.Password, user.HashPassword))
 {
     return new Response<string>(HttpStatusCode.BadRequest, "Incorrect name or password");
 }
-return new Response<string>(await GenerateJwtToken(user));
+
+ var random = new Random();
+
+            user.Code = random.Next(1000, 10000).ToString();
+            user.CodeTime = DateTime.UtcNow.AddMinutes(5);
+
+            await context.SaveChangesAsync();
+
+await emailSender.SendEmail(new EmailMessageDto(new[] {loginDto.Email}, "authentification code", $"<h1>{user.Code}</h1>"), MimeKit.Text.TextFormat.Html);
+return new Response<string>("Check your email");
+// return new Response<string>(await GenerateJwtToken(user));
             }
+
+    #endregion
+
+    #region VerifyCode
+    
+   public async Task<Response<string>> VerifyCode(string codecha)
+{
+    var user = await context.Users.FirstOrDefaultAsync(u => u.Code == codecha);
+
+    if (user == null)
+    {
+        return new Response<string>(HttpStatusCode.BadRequest, "Invalid code.");
+    }
+
+    if (user.CodeTime < DateTime.UtcNow)
+    {
+        return new Response<string>(HttpStatusCode.BadRequest, "Code has expired.");
+    }
+
+    var token = await GenerateJwtToken(user);
+
+    user.Code = null;
+    await context.SaveChangesAsync();
+
+    return new Response<string>(token);
+}
 
     #endregion
 

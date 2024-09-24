@@ -10,4 +10,5 @@ namespace Infrastructure.Services.Data;
     }
 
     public DbSet<User> Users { get; set; }
+    public DbSet<Car> Cars {get; set;}
 }

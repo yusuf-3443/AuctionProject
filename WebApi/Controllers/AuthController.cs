@@ -20,5 +20,12 @@ namespace WebApi.Controllers
         var response = await authService.Login(loginDto);
         return StatusCode(response.StatusCode, response);
     }
+
+    [HttpPost("verifycode")]
+    public async Task<IActionResult> VerifyCode([FromBody] string codecha)
+    {
+        var response = await authService.VerifyCode(codecha);
+        return StatusCode(response.StatusCode, response);
+    }
     }
 }

@@ -4,9 +4,14 @@ using Microsoft.EntityFrameworkCore;
 using WebApp.ExtensionMethods.AuthConfigurations;
 using WebApp.ExtensionMethods.RegisterService;
 using WebApp.ExtensionMethods.SwaggerConfigurations;
+using Domain.DTOs.EmailDTOs;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var emailConfig = builder.Configuration
+    .GetSection("EmailConfiguration")
+    .Get<EmailConfiguration>();
+builder.Services.AddSingleton(emailConfig!);
 
 // connection to database && dependency injection
 builder.Services.AddRegisterService(builder.Configuration);

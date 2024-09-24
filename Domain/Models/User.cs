@@ -8,4 +8,6 @@ public class User
     public string HashPassword { get; set; }
     public string PhoneNumber { get; set; }
     public string Role { get; set; }
+    public string? Code { get; set; }
+    public DateTime CodeTime { get; set; }
 }
